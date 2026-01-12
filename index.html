@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>School Login & Signup</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ===== TOP BAR ===== */
+.top-bar{
+    width:100%;
+    background:#ffd700;
+    color:#1e2a44;
+    overflow:hidden;
+    white-space:nowrap;
+    padding:10px 0;
+    position:fixed;
+    top:0;
+    left:0;
+}
+
+.top-text{
+    display:inline-block;
+    font-size:20px;
+    font-weight:bold;
+    padding-left:100%;
+    animation: moveText 18s linear infinite;
+}
+
+@keyframes moveText{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-100%); }
+}
+
+body{
+    background:#1e2a44;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding-top:70px;
+}
+
+/* ===== BOX ===== */
+.box{
+    background:#fff;
+    width:360px;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#1e2a44;
+}
+
+label{
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0 15px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#1e2a44;
+    color:#fff;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0f1a33;
+}
+
+.message{
+    text-align:center;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.switch{
+    text-align:center;
+    margin-top:15px;
+    cursor:pointer;
+    color:#1e2a44;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+    <div class="top-text">
+        GLOBAL MIND PUBLIC SCHOOL - ADMISSION & LOGIN PANEL 2025 - 26
+    </div>
+</div>
+
+<div class="box">
+
+<!-- LOGIN FORM -->
+<div id="loginForm">
+    <h2>Login</h2>
+
+    <label>Mobile Number</label>
+    <input type="text" id="loginMobile" placeholder="Enter Mobile Number">
+
+    <label>Password</label>
+    <input type="password" id="loginPassword" placeholder="Enter Password">
+
+    <button onclick="login()">Login</button>
+
+    <div class="message" id="loginMsg"></div>
+
+    <div class="switch" onclick="showSignup()">New User? Sign Up</div>
+</div>
+
+<!-- SIGNUP FORM -->
+<div id="signupForm" style="display:none;">
+    <h2>Sign Up</h2>
+
+    <label>Mobile Number</label>
+    <input type="text" id="signupMobile" placeholder="Enter Mobile Number">
+
+    <label>Password</label>
+    <input type="password" id="signupPassword" placeholder="Create Password">
+
+    <button onclick="signup()">Sign Up</button>
+
+    <div class="message" id="signupMsg"></div>
+
+    <div class="switch" onclick="showLogin()">Already have account? Login</div>
+</div>
+
+</div>
+
+<script>
+function showSignup(){
+    document.getElementById("loginForm").style.display="none";
+    document.getElementById("signupForm").style.display="block";
+}
+
+function showLogin(){
+    document.getElementById("signupForm").style.display="none";
+    document.getElementById("loginForm").style.display="block";
+}
+
+function signup(){
+    var mobile = document.getElementById("signupMobile").value;
+    var pass = document.getElementById("signupPassword").value;
+    var msg = document.getElementById("signupMsg");
+
+    if(mobile === "" || pass === ""){
+        msg.style.color="red";
+        msg.innerHTML="❌ All fields required";
+        return;
+    }
+
+    localStorage.setItem("mobile", mobile);
+    localStorage.setItem("password", pass);
+
+    msg.style.color="green";
+    msg.innerHTML="✅ Signup Successful";
+}
+
+function login(){
+    var mobile = document.getElementById("loginMobile").value;
+    var pass = document.getElementById("loginPassword").value;
+    var msg = document.getElementById("loginMsg");
+
+    var savedMobile = localStorage.getItem("mobile");
+    var savedPass = localStorage.getItem("password");
+
+    if(mobile === savedMobile && pass === savedPass){
+        msg.style.color="green";
+        msg.innerHTML="✅ Login Successful";
+    }else{
+        msg.style.color="red";
+        msg.innerHTML="❌ Invalid Mobile or Password";
+    }
+}
+</script>
+
+</body>
+</html>
+
